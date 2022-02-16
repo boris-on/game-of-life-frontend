@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"os"
 )
@@ -11,6 +12,11 @@ import (
 var tpl = template.Must(template.ParseFiles("main.html"))
 
 func mainPage(w http.ResponseWriter, r *http.Request) {
+
+	for k, v := range r.Header {
+		log.Println(k, v)
+	}
+
 	buf := &bytes.Buffer{}
 	err := tpl.Execute(buf, nil)
 	if err != nil {

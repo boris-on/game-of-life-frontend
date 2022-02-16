@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"os"
 )
 
 var tpl = template.Must(template.ParseFiles("main.html"))
@@ -23,6 +24,11 @@ func main() {
 	fs := http.FileServer(http.Dir("assets"))
 	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
 	mux.HandleFunc("/", mainPage)
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
 	fmt.Println("starting server at :8080")
-	http.ListenAndServe(":8080", mux)
+	http.ListenAndServe(":"+port, mux)
 }

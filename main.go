@@ -4,21 +4,39 @@ import (
 	"bytes"
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
 	"os"
 )
 
-var tpl = template.Must(template.ParseFiles("main.html"))
+var game_tpl = template.Must(template.ParseFiles("game.html"))
+var login_tpl = template.Must(template.ParseFiles("login.html"))
 
-func mainPage(w http.ResponseWriter, r *http.Request) {
+type PlayerInfo struct {
+	Nick string
+}
 
-	for k, v := range r.Header {
-		log.Println(k, v)
-	}
+func gamePage(w http.ResponseWriter, r *http.Request) {
+
+	r.ParseForm()
+	nick := r.Form["nick"][0]
+
+	playerInfo := PlayerInfo{Nick: nick}
 
 	buf := &bytes.Buffer{}
-	err := tpl.Execute(buf, nil)
+	err := game_tpl.Execute(buf, playerInfo)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+	buf.WriteTo(w)
+}
+
+func loginPage(w http.ResponseWriter, r *http.Request) {
+	// for k, v := range r.Header {
+	// 	log.Println(k, v)
+	// }
+
+	buf := &bytes.Buffer{}
+	err := login_tpl.Execute(buf, nil)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -29,12 +47,13 @@ func main() {
 	mux := http.NewServeMux()
 	fs := http.FileServer(http.Dir("assets"))
 	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
-	mux.HandleFunc("/", mainPage)
+	mux.HandleFunc("/game", gamePage)
+	mux.HandleFunc("/", loginPage)
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "3000"
+		port = "3001"
 	}
-	fmt.Println("starting server at :8080")
+	fmt.Println("starting server at", port)
 	http.ListenAndServe(":"+port, mux)
 }

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Game of life</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body style="background-color:black" >
+<script src="wasm_exec.js"></script>
+<script>
+  
+  
+// Polyfill
+if (!WebAssembly.instantiateStreaming) {
+  WebAssembly.instantiateStreaming = async (resp, importObject) => {
+    const source = await (await resp).arrayBuffer();
+    return await WebAssembly.instantiate(source, importObject);
+  };
+}
+
+const go = new Go();
+WebAssembly.instantiateStreaming(fetch("game-of-life.wasm"), go.importObject).then(result => {
+  go.run(result.instance);
+});
+</script>
+</body>

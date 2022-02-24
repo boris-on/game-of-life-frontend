@@ -1,0 +1,26 @@
+.nick{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+#game{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+body {
+    overflow: hidden; /
+  }
+
+.hide{
+    opacity: 0;
+    transition: .9s opacity ease-in-out;
+}
+
+.visible{
+    opacity: 1;
+}

@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-var game_tpl = template.Must(template.ParseFiles("game.html"))
+var game_tpl = template.Must(template.ParseFiles("main.html"))
 var login_tpl = template.Must(template.ParseFiles("login.html"))
 
 type PlayerInfo struct {
@@ -18,8 +18,10 @@ type PlayerInfo struct {
 func gamePage(w http.ResponseWriter, r *http.Request) {
 
 	r.ParseForm()
-	nick := r.Form["nick"][0]
-
+	nick := ""
+	if len(r.Form["nick"]) != 0 {
+		nick = r.Form["nick"][0]
+	}
 	playerInfo := PlayerInfo{Nick: nick}
 
 	buf := &bytes.Buffer{}
@@ -31,10 +33,7 @@ func gamePage(w http.ResponseWriter, r *http.Request) {
 }
 
 func loginPage(w http.ResponseWriter, r *http.Request) {
-	// for k, v := range r.Header {
-	// 	log.Println(k, v)
-	// }
-
+	fmt.Println(r)
 	buf := &bytes.Buffer{}
 	err := login_tpl.Execute(buf, nil)
 	if err != nil {

@@ -6,18 +6,22 @@
     <meta http-equiv="content-type" content="text/html" />
     <title>Game of life</title>
     <link rel="stylesheet" href="/assets/style.css" />
+    <script type="text/javascript" src="assets/custom.js"></script>
+
   </head>
-  <body>
+  <body style="background-color:black" class="hide">
     <main>
       <header>
         <form action="/game" method="POST">
           <input
             autofocus
-            class="search-input"
+            id="nick"
+            class="nick"
             value=""    
             placeholder="Enter your nick"
             type="text"
             name="nick"
+            oninput="setNick()"
           />
         </form>
       </header>

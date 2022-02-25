@@ -1,6 +1,10 @@
 setTimeout(function(){
-	document.body.classList.add("visible")
+	document.getElementById("logo").classList.add("visible")
 }, 200)
+
+setTimeout(function(){
+	document.getElementById("form").classList.add("visible")
+}, 750)
 
 function setNick(){
 	var nick = document.getElementById("nick").value;

@@ -9,16 +9,17 @@
     <script type="text/javascript" src="assets/custom.js"></script>
 
   </head>
-  <body style="background-color:black" class="hide">
+  <body style="background-color:black" >
     <main>
       <header>
-        <form action="/game" method="POST">
+        <div id="logo" class="pixelart-to-css hide"></div>
+        <form id="form" class="hide" action="/game" method="POST">
           <input
             autofocus
             id="nick"
             class="nick"
             value=""    
-            placeholder="Enter your nick"
+            placeholder="Enter your  nick"
             type="text"
             name="nick"
             oninput="setNick()"

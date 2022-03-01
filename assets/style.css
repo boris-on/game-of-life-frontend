@@ -10,9 +10,10 @@
     text-align: center;
 }
 
-.nickDisplay {
+.nicksDisplay {
   color: white;
   font-family: Arcade;
+  
 }
 
 @font-face {

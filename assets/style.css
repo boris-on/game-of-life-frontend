@@ -9,6 +9,12 @@
     font-size: 45px;
     text-align: center;
 }
+
+.nickDisplay {
+  color: white;
+  font-family: Arcade;
+}
+
 @font-face {
 	font-family: Arcade;
 	src: local("ARCADECLASSIC.TTF"), url("ARCADECLASSIC.TTF");
